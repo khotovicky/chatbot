@@ -1,17 +1,31 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <button v-if="mode === 'user'" @click="() => (mode = 'admin')">
+    Войти как администратор
+  </button>
+  <button v-else @click="() => (mode = 'user')">Войти как пользователь</button>
+
+  <div class="chat-window">
+    <chatWindow :mode="mode" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from "vue";
+import chatWindow from "./components/Chat.vue";
+
+export const mode = ref("user");
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    chatWindow,
+  },
+  setup() {
+    return {
+      mode,
+    };
+  },
+};
 </script>
 
 <style>
@@ -22,5 +36,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.chat-window {
+  width: 300px;
+  height: 400px;
+  padding: 3px;
+  overflow: auto;
+  border: red solid 5px;
+  box-shadow: chocolate 4px 2px;
 }
 </style>
